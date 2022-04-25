@@ -2,22 +2,25 @@ from socket import AF_INET, socket, SOCK_STREAM
 from threading import Thread
 import time
 
-from server.person import Person
+from person import Person
 
 # global variable
 HOST = 'localhost'
 PORT = 5500
 ADDR = (HOST, PORT)
 MAX_CONNECTIONS = 10
-SERVER = socket(AF_INET, SOCK_STREAM)
-SERVER.bind(ADDR)
 BUFSIZ = 512
 
-# local variable
-persons = {}
+SERVER = socket(AF_INET, SOCK_STREAM)
+SERVER.bind(ADDR)
 
-def broadcast():
-    pass
+# local variable
+persons = []
+
+def broadcast(msg, name):
+    for person in persons:
+        client = person.client
+        client.send(bytes(name + ": ", "utf8"))
 
 def client_communication(person):
     client = person.client
@@ -25,15 +28,26 @@ def client_communication(person):
 
     # Get persons name
     name = client.recv(BUFSIZ).decode("utf8")
-    msg = f"{name} has joined the chat!"
-    broadcast(msg)
+    msg = bytes(f"{name} has joined the chat!")
+    broadcast(msg,name) # Broadcast welcome message
 
     while True:
-        msg = client.recv(BUFSIZ)
-        if msg == bytes("{quit}", "utf8"):
-            client.close()
-        else:
-            pass
+        try:
+            msg = client.recv(BUFSIZ)
+            print(f"{name}: ", msg.decode("utf8"))
+
+            if msg == bytes("{quit}", "utf8"):
+                broadcast(f"{name} has left the chat...", "")
+                client.send(bytes("{quit}", "utf8"))
+                client.close()
+
+                persons.remove(person)
+                break
+            else:
+                broadcast(msg, name)
+        except Exception as e:
+            print("[EXCEPTION]", e)
+            break
 
 def wait_for_connection():
     run = True
@@ -41,10 +55,11 @@ def wait_for_connection():
         try:
             client, addr = SERVER.accept()
             person = Person(addr, client)
+            persons.append(person)
             print(f"[CONNECTION] {addr} connected to the server at {time.time()}")
             Thread(target=client_communication, args=(person,)).start
         except Exception as e:
-            print("[FAILURE]", e)
+            print("[EXCEPTION]", e)
             run = False
 
     print("SERVER CRASHED")

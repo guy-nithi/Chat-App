@@ -1,8 +1,3 @@
-from ctypes import addressof
-from http import client
-from unicodedata import name
-
-
 class Person():
     def __init__(self, addr, client):
         self.addr = addr
