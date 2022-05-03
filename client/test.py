@@ -1,9 +1,11 @@
 from socket import AF_INET, SOCK_STREAM, socket
 from threading import Thread
+import time
 
 # GLOBAL CONSTANTS
+HOST = '' # Hong
 HOST = 'localhost'
-PORT = 5500
+PORT = 8080
 ADDR = (HOST, PORT)
 BUFSIZ = 512
 
@@ -33,4 +35,6 @@ receive_thread = Thread(target=receive_message)
 receive_thread.start()
 
 send_message("Guy")
+time.sleep(10)
 send_message("Hello By User: Guy")
+send_message(f"{quit}")
