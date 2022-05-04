@@ -15,6 +15,8 @@ class Client:
         self.messages = []
         self.receive_thread = Thread(target=self.receive_message)
         self.receive_thread.start()
+        self.send_message(name)
+        
 
     def receive_message(self):
         while True:
