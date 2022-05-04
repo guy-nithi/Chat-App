@@ -16,7 +16,7 @@ class Client:
         self.receive_thread = Thread(target=self.receive_message)
         self.receive_thread.start()
         self.send_message(name)
-        
+
 
     def receive_message(self):
         while True:
@@ -32,3 +32,6 @@ class Client:
         self.client_socket.send(bytes(msg, "utf8"))
         if msg == "{quit}":
             self.client_socket.close()
+
+    def get_messages(self):
+        return self.messages
