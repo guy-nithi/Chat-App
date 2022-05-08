@@ -1,7 +1,5 @@
 from socket import AF_INET, SOCK_STREAM, socket
 from threading import Thread, Lock
-import threading
-import time
 
 class Client:
     HOST = '' # Hong
@@ -42,9 +40,12 @@ class Client:
             print(e)
 
     def get_messages(self):
+        messages_copy = self.messages[:]
         self.lock.acquire()
+        self.messages = []
         self.lock.release()
-        return self.messages
+
+        return messages_copy
 
     def disconnect(self):
         self.send_message(bytes("{quit}", "utf8"))
