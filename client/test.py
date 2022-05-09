@@ -6,18 +6,6 @@ from threading import Thread
 c1 = Client("Guy")
 c2 = Client("Unknown")
 
-c1.send_message("hello")
-time.sleep(1)
-c2.send_message("Whats up")
-time.sleep(1)
-c1.send_message("nothing much, hbu")
-time.sleep(1)
-c2.send_message("Boring...")
-
-c1.disconnect()
-time.sleep(2)
-c2.disconnect()
-
 def update_message():
     msgs = []
     run = True
@@ -32,3 +20,15 @@ def update_message():
                 break
 
 Thread(target=update_message).start()
+
+c1.send_message("hello")
+time.sleep(1)
+c2.send_message("Whats up")
+time.sleep(1)
+c1.send_message("nothing much, hbu")
+time.sleep(1)
+c2.send_message("Bruh why u asking dude...")
+
+c1.disconnect()
+time.sleep(2)
+c2.disconnect()
