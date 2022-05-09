@@ -6,6 +6,7 @@ from threading import Thread
 c1 = Client("Guy")
 c2 = Client("Unknown")
 
+
 def update_message():
     msgs = []
     run = True
@@ -18,6 +19,7 @@ def update_message():
             if msg == "{quit}":
                 run = False
                 break
+
 
 Thread(target=update_message).start()
 

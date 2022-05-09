@@ -18,6 +18,7 @@ SERVER.bind(ADDR)
 # local variable
 persons = []
 
+
 def broadcast(msg, name):
     # print("I'm in broadcast.") # Hong
     for person in persons:
@@ -25,17 +26,17 @@ def broadcast(msg, name):
         client.send(bytes(name + ": ", "utf8"))
         # client.send(bytes(name + ": ", "utf8") + msg) # Hong
 
+
 def client_communication(person):
     # print("I'm in client_communication.") # Hong
     client = person.client
-    addr = person.addr
 
     # Get persons name
     name = client.recv(BUFSIZ).decode("utf8")
     # person.set_name(name) # Hong
-    msg = bytes(f"{name} has joined the chat!", "utf8") # GUY! You're missing "utf8"!
+    msg = bytes(f"{name} has joined the chat!", "utf8")  # GUY! You're missing "utf8"!
     person.set_name(name)
-    broadcast(msg, "") # Broadcast welcome message
+    broadcast(msg, "")  # Broadcast welcome message
     # broadcast(msg, "") # Hong
 
     while True:
@@ -57,6 +58,7 @@ def client_communication(person):
             print("[EXCEPTION]", e)
             break
 
+
 def wait_for_connection():
     # print("I'm in wait_for_connection.") # Hong
     run = True
@@ -74,6 +76,7 @@ def wait_for_connection():
             run = False
 
     print("SERVER CRASHED")
+
 
 if __name__ == '__main__':
     SERVER.listen(10) # Listen for connections

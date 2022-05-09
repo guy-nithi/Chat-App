@@ -1,4 +1,4 @@
-class Person():
+class Person:
     def __init__(self, addr, client):
         self.addr = addr
         self.name = None
