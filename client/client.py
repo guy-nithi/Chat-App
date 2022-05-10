@@ -2,7 +2,7 @@ from socket import AF_INET, SOCK_STREAM, socket
 from threading import Thread, Lock
 
 class Client:
-    HOST = '' # Hong
+    HOST = ''  # Hong
     HOST = 'localhost'
     PORT = 8080
     ADDR = (HOST, PORT)

@@ -1,4 +1,3 @@
-from re import T
 from client import Client
 import time
 from threading import Thread
