@@ -76,7 +76,7 @@ def wait_for_connection():
 
 
 if __name__ == '__main__':
-    SERVER.listen(10)  # Listen for connections
+    SERVER.listen(10)  # Open server to listen for connections
     print("[STARTED] Waiting for connection...")
     ACCEPT_THREAD = Thread(target=wait_for_connection)
     print(ACCEPT_THREAD)
