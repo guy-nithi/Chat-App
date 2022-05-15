@@ -1,6 +1,7 @@
 from socket import AF_INET, SOCK_STREAM, socket
 from threading import Thread, Lock
 
+
 class Client:
     HOST = ''  # Hong
     HOST = 'localhost'
