@@ -1,13 +1,16 @@
 from flask import Flask, render_template, url_for, redirect, request, session
+from client import Client
 
 NAME_KEY = ''
 
 app = Flask(__name__)
 app.secret_key = "Mabisisthebest"
 
-# @app.route("/login")
-# def login():
-#     return render_template("login.html")
+@app.route("/login", methods=["POST","GET"])
+def login():
+    if request.method == "POST":
+        pass # Not Done Yet
+    return render_template("login.html")
 
 
 @app.route("/logout")
@@ -24,6 +27,12 @@ def home():
 
     # name = session[NAME_KEY]
     return render_template("index.html")
+
+
+@app.route("/run")
+def run():
+    print("clicked")
+    return 'none'
 
 
 if __name__ == "__main__":
