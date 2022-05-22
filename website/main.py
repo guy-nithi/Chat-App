@@ -4,12 +4,13 @@ from flask import Flask, render_template, url_for, redirect, request, session
 NAME_KEY = ''
 
 app = Flask(__name__)
-app.secret_key = "Mabisisthebest"
+app.secret_key = "YO"
 
 @app.route("/login", methods=["POST","GET"])
 def login():
     if request.method == "POST":
-        session[NAME_KEY] = request.form["name"]
+        session[NAME_KEY] = request.form["inputName"]
+        return redirect(url_for("home"))
 
     return render_template("login.html")
 
