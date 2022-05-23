@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
 {% block title %}Home{% endblock %}
+{% block messageGrey %}
+{{session["name"] logged out}}
+{% endblock %}
+
 {% block content %}
 <form class="form-inline" action="#" method="POST">
     <div class="form-group mb-2">
