@@ -2,7 +2,7 @@
     $('#test').bind('click', function() {
         $.getJSON('/run',
             function(data) {
-                // Do nothing
+                value = document.getElementById("msg").value
             });
         return false;
     });
