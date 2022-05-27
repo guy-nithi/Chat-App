@@ -31,8 +31,11 @@ def home():
     return render_template("index.html", **{"login":True, "session":session})
 
 
-@app.route("/run")
-def run():
+@app.route("/run/", methods=["GET`"])
+def run(url=None):
+    msg = request.args.get("val")
+    print(msg)
+
     print("clicked")
     return 'none'
 

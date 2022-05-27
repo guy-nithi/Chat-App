@@ -1,8 +1,11 @@
 (function() {
-    $('#test').bind('click', function() {
+    $('#sendBtn').bind('click', function() {
+        var value = document.getElementById("msg").value
+        console.log(value)
         $.getJSON('/run',
+            {val:value},
             function(data) {
-                value = document.getElementById("msg").value
+
             });
         return false;
     });
