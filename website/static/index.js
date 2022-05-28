@@ -1,12 +1,19 @@
-(function() {
+$(function() {
     $('#sendBtn').bind('click', function() {
         var value = document.getElementById("msg").value
-        console.log(value)
-        $.getJSON('/run',
+        // console.log(value)
+        $.getJSON('/send_message/',
             {val:value},
             function(data) {
 
             });
+    fetch('/get_messages')
+        .then(function (response) {
+            return response.text();
+        }).then(function (text) {
+            console.log('GET response text:')
+            console.log(text); // Print the greeting as text
+        });
         return false;
     });
 });
@@ -17,3 +24,6 @@ function validate(name) {
     }
     return false;
 }
+
+
+
