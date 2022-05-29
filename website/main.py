@@ -42,7 +42,7 @@ def home():
     return render_template("index.html", **{"login": True, "session": session})
 
 
-@app.route("/run/", methods=["GET"])
+@app.route("/send_message", methods=["GET"])
 def send_message(url=None):
     global client
     msg = request.args.get("val")
@@ -56,15 +56,16 @@ def get_messages():
     return jsonify({"messages": messages})
 
 def update_message():
-    msgs = []
+    global messages
     run = True
     while run:
         time.sleep(0.1)  # Update every 1/10 of a second
         if not client: continue
         new_messages = client.get_messages()  # Get any new messages from client
-        msgs.extend(new_messages)  # Add to local list of messages
+        messages.extend(new_messages)  # Add to local list of messages
 
         for msg in new_messages:  # Display new messages
+            print(msg)
             if msg == "{quit}":
                 run = False
                 break
@@ -73,5 +74,5 @@ def update_message():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
     Thread(target=update_message).start()
+    app.run(debug=True)

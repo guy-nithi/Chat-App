@@ -23,7 +23,10 @@ def broadcast(msg, name):
     # print("I'm in broadcast.") # Hong
     for person in persons:
         client = person.client
-        client.send(bytes(name + ": ", "utf8"))
+        try:
+            client.send(bytes(name, "utf8") + msg)
+        except Exception as e:
+            print("[EXCEPTION", e)
         # client.send(bytes(name + ": ", "utf8") + msg) # Hong
 
 
@@ -38,23 +41,17 @@ def client_communication(person):
     broadcast(msg, "")  # Broadcast welcome message
 
     while True:  # Wait for any message from
-        try:
-            msg = client.recv(BUFSIZ)
+        msg = client.recv(BUFSIZ)
 
-            if msg == bytes("{quit}", "utf8"):  # If message is quit disconnect client
-                client.send(bytes("{quit}", "utf8"))
-                client.close()
-                persons.remove(person)
-                broadcast(bytes(f"{name} has left the chat...", "utf8"), "")
-                print(f"[DISCONNECTED] {name} disconnected")
-                break
-            else:  # Otherwise send message to all other clients
-                broadcast(msg, name + ": ")
-                print(f"{name}: ", msg.decode("utf8"))
-
-        except Exception as e:
-            print("[EXCEPTION]", e)
+        if msg == bytes("{quit}", "utf8"):  # If message is quit disconnect client
+            client.close()
+            persons.remove(person)
+            broadcast(bytes(f"{name} has left the chat...", "utf8"), "")
+            print(f"[DISCONNECTED] {name} disconnected")
             break
+        else:  # Otherwise, send message to all others clients
+            broadcast(msg, name + ": ")
+            print(f"{name}: ", msg.decode("utf8"))
 
 
 def wait_for_connection():
@@ -76,7 +73,7 @@ def wait_for_connection():
 
 
 if __name__ == '__main__':
-    SERVER.listen(10)  # Open server to listen for connections
+    SERVER.listen(MAX_CONNECTIONS)  # Open server to listen for connections
     print("[STARTED] Waiting for connection...")
     ACCEPT_THREAD = Thread(target=wait_for_connection)
     print(ACCEPT_THREAD)
