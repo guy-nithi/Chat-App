@@ -23,8 +23,10 @@ function update(){
             .then(function (response) {
                 return response.json();
             }).then(function (text) {
+                var messages = "";
                 for (value of text["messages"]){
-                    document.write(value +"<br >");
+                    messages = messages + "<br >" + value
                 }
+                document.getElementById("test").innerHTML = messages
         });
 };

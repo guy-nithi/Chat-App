@@ -52,7 +52,7 @@
       <recent name="$PROJECT_DIR$/website" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.web_server">
+  <component name="RunManager" selected="Python.server">
     <configuration name="server" type="PythonConfigurationType" factoryName="Python">
       <module name="Chat_App" />
       <option name="INTERPRETER_OPTIONS" value="" />
